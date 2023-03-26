@@ -1,0 +1,25 @@
+total 116
+-rwxrwxrwx 1 daniel daniel    26 Mar 22 16:05 README.md
+-rwxrwxrwx 1 daniel daniel 17296 Mar 23 16:34 a.out
+-rwxrwxrwx 1 daniel daniel    83 Mar 23 16:09 check.c
+-rwxrwxrwx 1 daniel daniel   550 Mar 23 16:34 file
+-rwxrwxrwx 1 daniel daniel  1074 Dec 28 13:44 key.c
+-rwxrwxrwx 1 daniel daniel 17176 Mar 22 15:46 myshell
+-rwxrwxrwx 1 daniel daniel  1032 Dec 21 18:54 shell1.c
+-rwxrwxrwx 1 daniel daniel  1443 Dec 21 18:54 shell2.c
+-rwxrwxrwx 1 daniel daniel  3712 Mar 23 16:34 shell3.c
+-rwxrwxrwx 1 daniel daniel 54501 Mar 17 12:37 task1.pdf
+total 116
+-rwxrwxrwx 1 daniel daniel    26 Mar 22 16:05 README.md
+-rwxrwxrwx 1 daniel daniel 17344 Mar 23 17:02 a.out
+-rwxrwxrwx 1 daniel daniel    90 Mar 23 16:42 check.c
+-rwxrwxrwx 1 daniel daniel   550 Mar 23 16:34 file
+-rwxrwxrwx 1 daniel daniel     0 Mar 23 16:37 file12
+-rwxrwxrwx 1 daniel daniel     0 Mar 23 16:42 file2
+-rwxrwxrwx 1 daniel daniel  1074 Dec 28 13:44 key.c
+-rwxrwxrwx 1 daniel daniel 17176 Mar 22 15:46 myshell
+-rwxrwxrwx 1 daniel daniel  1032 Dec 21 18:54 shell1.c
+-rwxrwxrwx 1 daniel daniel  1443 Dec 21 18:54 shell2.c
+-rwxrwxrwx 1 daniel daniel  3777 Mar 23 17:00 shell3.c
+-rwxrwxrwx 1 daniel daniel 54501 Mar 17 12:37 task1.pdf
+"hey"
