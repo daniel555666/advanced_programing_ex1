@@ -9,7 +9,16 @@
 
 #include <iostream>
 #include <stack>
+#include <vector>
+#include <memory>
+#include "Variable.hpp"
 using namespace std;
+
+bool prefix(const char *pre, const char *str)
+{
+    return strncmp(pre, str, strlen(pre)) == 0;
+}
+
 
 int main()
 {
@@ -21,6 +30,9 @@ int main()
     int fildes[2];
     char *argv1[10], *argv2[10], *save[20];
     stack<char *> myStack;
+    vector<auto_ptr<Variable *>> variables;
+
+
 
     while (1)
     {
@@ -218,5 +230,22 @@ int main()
         /* waits for child to exit if required */
         if (amper == 0)
             retid = wait(&status);
-    }
+        }
+
+        // question 10 - add a variable    
+        if(i>=3 && prefix("$", argv1[0]) && !strcmp(argv1[1], "=")){
+            std::string varName = std::string()
+            std::string varVal = std::string()
+            int index = 1;
+            for(index = 1; i < strlen(argv1[0])){
+                varName += argv1[0][index]; 
+            }
+            for(index = 1; i < strlen(argv1[0])){
+                varVal += argv1[2][index];
+            }
+            Variable* v = new Variable(varName, varVal);
+            auto_ptr<Variable *> ptr(v)
+            variables.push_back(std::auto_ptr<Variable *>())
+        }
+
 }
