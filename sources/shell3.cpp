@@ -28,7 +28,8 @@ using namespace std;
 using std::vector;
 using std::string;
 char *prompt = "hello: ";
-int count=0;
+int his_count=0;
+int browse_mod = 0;
 
 
 int exec(char *command, int fix_bit);
@@ -117,7 +118,19 @@ int main() {
 
     while (1) {
         printf("%s", prompt);
+//        if (getchar() == '\033') { // if the first value is esc
+//            getchar(); // skip the [
+//            switch(getchar()) { // the real value
+//                case 'A':
+//                    // code for arrow up
+//                    cout<<"up arrow"<<endl;
+//                case 'B':
+//                    // code for arrow down
+//                    cout<<"down arrow"<<endl;
+//            }
+//        }
         fgets(command, 1024, stdin);
+
         int checkQuit = exec(command, 0);
         //if this is the output of the if condition
         if(cond_mod == 1 && cond_array[0][0] == 1 && cond_array[0][1] == -1 && cond_array[0][2] == -1){
@@ -168,35 +181,48 @@ int exec(char *command, int fix_bit) {
 
     /* Is command empty */
     if (argv1[0] == NULL) {
+        if(browse_mod == 1){
+            int status = 0;
+            status = exec(myList.at(myList.size()-1-his_count), 1);
+            his_count = 0;
+            browse_mod = 0;
+            return status;
+        }
         return 0;
     }
     //for q 12
-    if(argv1[0]=="^[[B"||argv1[0]=="^[[A"){
-
+    if((!strcmp(argv1[0], "\033[B")) || (!strcmp(argv1[0], "\033[A"))){
+        cout<<"reached here"<<endl;
         for(int j=0; j < argc1; j++){
-            if(strcmp(argv1[j],"^[[A")){
-                if(count!=myList.size()-1){
-                    count++;
+            if(!strcmp(argv1[j],"\033[A")){
+                if(his_count!=myList.size()-1){
+                    if(browse_mod == 0){
+                        browse_mod = 1;
+                    }
+                    else {
+                        his_count++;
+                    }
                 }
             }
             else
-            if(strcmp(argv1[j],"^[[B")){
-                if(count!=0){
-                    count--;
+            if(!strcmp(argv1[j],"\033[B") && browse_mod == 1){
+                if(his_count!=0){
+                    his_count--;
                 }
             }
-                    
+
             else{ printf(" bad syntax\n");
                 return 0;
             }
-              
+
         }
-        
-        printf("%s\n",myList.at(myList.size()-1-count));
-        
+
+        int ind = myList.size()-1-his_count;
+        cout<<myList.at(ind)<<endl;
+        cout.flush();
         return 0;
     }
-    count=0;
+//    his_count=0;
 
     //enter cond mod
     if(!strcmp(argv1[0], "if") && cond_mod == 0){
