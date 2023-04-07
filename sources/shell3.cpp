@@ -28,11 +28,13 @@ using namespace std;
 using std::vector;
 using std::string;
 char *prompt = "hello: ";
+int count=0;
+
 
 int exec(char *command, int fix_bit);
 
 pid_t pId;
-list<char *> myList;
+vector<char *> myList;
 bool flag = false;
 std::vector<auto_ptr<Variable>> vars;
 int cond_array[2][3] = {{-1, -1, -1}, {-1, -1, -1}};
@@ -111,7 +113,7 @@ void sigint_handler(int sig) {
 int main() {
 //    signal(SIGINT, sigint_handler);
     char command[1024];
-    list<char *> myList;
+    vector<char *> myList;
 
     while (1) {
         printf("%s", prompt);
@@ -168,6 +170,33 @@ int exec(char *command, int fix_bit) {
     if (argv1[0] == NULL) {
         return 0;
     }
+    //for q 12
+    if(argv1[0]=="^[[B"||argv1[0]=="^[[A"){
+
+        for(int j=0; j < argc1; j++){
+            if(strcmp(argv1[j],"^[[A")){
+                if(count!=myList.size()-1){
+                    count++;
+                }
+            }
+            else
+            if(strcmp(argv1[j],"^[[B")){
+                if(count!=0){
+                    count--;
+                }
+            }
+                    
+            else{ printf(" bad syntax\n");
+                return 0;
+            }
+              
+        }
+        
+        printf("%s\n",myList.at(myList.size()-1-count));
+        
+        return 0;
+    }
+    count=0;
 
     //enter cond mod
     if(!strcmp(argv1[0], "if") && cond_mod == 0){
