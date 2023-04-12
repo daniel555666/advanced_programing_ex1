@@ -41,6 +41,7 @@ std::vector<auto_ptr<Variable>> vars;
 int cond_array[2][3] = {{-1, -1, -1}, {-1, -1, -1}};
 int cond_mod = 0;
 int cond_status = -1;
+int last_status = 0;
 
 int get_last_command_index(char *argv[10], int argc) {
     int index = 0;
@@ -121,6 +122,7 @@ int main() {
         fgets(command, 1024, stdin);
 
         int checkQuit = exec(command, 0);
+        last_status = checkQuit;
         //if this is the output of the if condition
         if(cond_mod == 1 && cond_array[0][0] == 1 && cond_array[0][1] == -1 && cond_array[0][2] == -1){
             cond_status = checkQuit;
@@ -337,8 +339,7 @@ int exec(char *command, int fix_bit) {
 
     // for question 4 //
     if (argc1 == 2 && (!strcmp(argv1[0], "echo")) && (!strcmp(argv1[1], "$?"))) {
-        int child_status = status & 0xFF;
-        printf("%d\n", child_status);
+        printf("%d\n", last_status);
         return 0;
     }
 
