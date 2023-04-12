@@ -1,0 +1,114 @@
+./myshell
+hello: ls -l
+total 456
+-rw-r--r-- 1 root root    226 Apr  1 12:53 CMakeLists.txt
+-rw-r--r-- 1 root root    535 Apr 12 13:07 Makefile
+-rw-r--r-- 1 root root    394 Apr 12 13:11 README.md
+-rw-r--r-- 1 root root    391 Apr  6 16:28 check.cpp
+drwxr-xr-x 1 root root   4096 Apr  1 12:34 cmake-build-debug
+drwxr-xr-x 1 root root   4096 Apr  1 12:57 cmake-build-debug-wsl
+-rw-r--r-- 1 root root   1123 Apr  7 16:12 key.c
+-rwxr-xr-x 1 root root 304464 Apr 12 21:03 myshell
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 objects
+-rw-r--r-- 1 root root   1085 Apr  7 16:12 shell1.c
+-rw-r--r-- 1 root root   1514 Apr  7 16:12 shell2.c
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 sources
+-rw-r--r-- 1 root root  54501 Mar 27 15:46 task1.pdf
+drwxr-xr-x 1 root root   4096 Mar 27 15:46 temp
+-rw-r----- 1 root root      0 Apr 12 21:43 test.txt
+hello: ls
+CMakeLists.txt  README.md  cmake-build-debug      key.c    objects   shell2.c  task1.pdf  test.txt
+Makefile        check.cpp  cmake-build-debug-wsl  myshell  shell1.c  sources   temp
+hello: ls -l > file.txt
+hello: cat file.txt
+total 456
+-rw-r--r-- 1 root root    226 Apr  1 12:53 CMakeLists.txt
+-rw-r--r-- 1 root root    535 Apr 12 13:07 Makefile
+-rw-r--r-- 1 root root    394 Apr 12 13:11 README.md
+-rw-r--r-- 1 root root    391 Apr  6 16:28 check.cpp
+drwxr-xr-x 1 root root   4096 Apr  1 12:34 cmake-build-debug
+drwxr-xr-x 1 root root   4096 Apr  1 12:57 cmake-build-debug-wsl
+-rw-r----- 1 root root      0 Apr 12 21:46 file.txt
+-rw-r--r-- 1 root root   1123 Apr  7 16:12 key.c
+-rwxr-xr-x 1 root root 304464 Apr 12 21:03 myshell
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 objects
+-rw-r--r-- 1 root root   1085 Apr  7 16:12 shell1.c
+-rw-r--r-- 1 root root   1514 Apr  7 16:12 shell2.c
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 sources
+-rw-r--r-- 1 root root  54501 Mar 27 15:46 task1.pdf
+drwxr-xr-x 1 root root   4096 Mar 27 15:46 temp
+-rw-r----- 1 root root      0 Apr 12 21:43 test.txt
+hello: cat file.txt | head -5 | tail -5
+total 456
+-rw-r--r-- 1 root root    226 Apr  1 12:53 CMakeLists.txt
+-rw-r--r-- 1 root root    535 Apr 12 13:07 Makefile
+-rw-r--r-- 1 root root    394 Apr 12 13:11 README.md
+-rw-r--r-- 1 root root    391 Apr  6 16:28 check.cpp
+hello: ls nofile 2> 2file.txt
+hello: cat 2file.txt
+ls: cannot access 'nofile': No such file or directory
+hello: ls
+2file.txt       Makefile   check.cpp          cmake-build-debug-wsl  key.c    objects   shell2.c  task1.pdf  test.txt
+CMakeLists.txt  README.md  cmake-build-debug  file.txt               myshell  shell1.c  sources   temp
+hello: echo $?
+0
+hello: echo hello world
+hello world
+hello: !!
+hello world
+hello: $name = ofri
+hello: echo $name
+ofri
+hello: echo name
+name
+hello: read name
+ofri
+hello: if cat file.txt
+hello: then
+hello: ls
+hello: else
+hello: ls -l
+hello: fi
+total 456
+-rw-r--r-- 1 root root    226 Apr  1 12:53 CMakeLists.txt
+-rw-r--r-- 1 root root    535 Apr 12 13:07 Makefile
+-rw-r--r-- 1 root root    394 Apr 12 13:11 README.md
+-rw-r--r-- 1 root root    391 Apr  6 16:28 check.cpp
+drwxr-xr-x 1 root root   4096 Apr  1 12:34 cmake-build-debug
+drwxr-xr-x 1 root root   4096 Apr  1 12:57 cmake-build-debug-wsl
+-rw-r----- 1 root root      0 Apr 12 21:46 file.txt
+-rw-r--r-- 1 root root   1123 Apr  7 16:12 key.c
+-rwxr-xr-x 1 root root 304464 Apr 12 21:03 myshell
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 objects
+-rw-r--r-- 1 root root   1085 Apr  7 16:12 shell1.c
+-rw-r--r-- 1 root root   1514 Apr  7 16:12 shell2.c
+drwxr-xr-x 1 root root   4096 Apr 12 21:03 sources
+-rw-r--r-- 1 root root  54501 Mar 27 15:46 task1.pdf
+drwxr-xr-x 1 root root   4096 Mar 27 15:46 temp
+-rw-r----- 1 root root      0 Apr 12 21:43 test.txt
+2file.txt       Makefile   check.cpp          cmake-build-debug-wsl  key.c    objects   shell2.c  task1.pdf  test.txt
+CMakeLists.txt  README.md  cmake-build-debug  file.txt               myshell  shell1.c  sources   temp
+hello: if echo 1
+hello: then
+hello: ls
+hello: else
+hello: ls -l
+hello: fi
+1
+Makefile  README.md  check.cpp  cmake-build-debug  cmake-build-debug-wsl  key.c  myshell  objects  shell1.c  shell2.c  sources  task1.pdf  temp
+hello: if echo 11
+hello: then
+hello: echo 22
+hello: else
+hello: echo 55
+hello: fi
+11
+22
+hello: ^[[A
+echo 22
+hello:
+22
+hello: ^[[B
+echo 22
+hello: ^[[B
+echo 22
