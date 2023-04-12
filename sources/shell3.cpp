@@ -132,7 +132,8 @@ int main() {
 }
 
 int exec(char *command, int fix_bit) {
-    int fd, amper, redirect, redirect2, redirect3, piping, retid, status, argc1, i;
+    int fd, amper, redirect, redirect2, redirect3, piping, retid, argc1, i;
+    int status = 0;
     int pipe_counter = 1;
     int fildes[2];
     char *argv1[10], *argv2[10], *save[20];
@@ -261,7 +262,7 @@ int exec(char *command, int fix_bit) {
         auto it = myList.begin();
         int k = 0;
         int ind;
-        cond_mod = 0;
+//        cond_mod = 0;
         ind = cond_array[1][0];// the index of the "if" command
         cond_status = exec(myList.at(ind), 1);
         if(cond_status == 0){
@@ -302,6 +303,7 @@ int exec(char *command, int fix_bit) {
             argv1[k-1] = argv1[k];
         }
         argc1--;
+        i--;
     }
 
 
@@ -324,11 +326,8 @@ int exec(char *command, int fix_bit) {
     //question 6
     if (!strcmp(argv1[0], "!!")) {
         if (myList.empty()) {
-//            printf(" 444%s\n", myList.back());
             return 0;
         }
-//        printf("5555 %s\n", myList.back());
-
         exec(myList.back(), 1);
         return 0;
     }
@@ -339,7 +338,8 @@ int exec(char *command, int fix_bit) {
 
     // for question 4 //
     if (argc1 == 2 && (!strcmp(argv1[0], "echo")) && (!strcmp(argv1[1], "$?"))) {
-        printf("%d\n", last_status);
+        int out = last_status & 0xFF;
+        printf("%d\n", out);
         return 0;
     }
 
@@ -375,7 +375,7 @@ int exec(char *command, int fix_bit) {
         }
         if (flag == 0) {
             int j = 1;
-            while (j < i - 1) {
+            while (j < i -1) {
                 printf("%s ", (argv1[j++]));
             }
             printf("%s\n", argv1[j]);
@@ -463,6 +463,6 @@ int exec(char *command, int fix_bit) {
         retid = wait(&status);
 
     flag = false;
-    return 0;
+    return status;
 }
 
