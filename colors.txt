@@ -1,9 +1,0 @@
-1. red
-2. black
-3. blue
-4. pink
-5. yellow
-6. purple
-7. brown
-8. gray
-9. white

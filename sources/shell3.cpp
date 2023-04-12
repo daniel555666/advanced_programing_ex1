@@ -107,28 +107,17 @@ void sigint_handler(int sig) {
     if(flag){
         kill(pId,SIGTERM);
     }
-    printf("%s",prompt);
+//    printf("%s",prompt);
     fflush(stdout);
 }
 
 int main() {
-//    signal(SIGINT, sigint_handler);
+    signal(SIGINT, sigint_handler);
     char command[1024];
     vector<char *> myList;
 
     while (1) {
         printf("%s", prompt);
-//        if (getchar() == '\033') { // if the first value is esc
-//            getchar(); // skip the [
-//            switch(getchar()) { // the real value
-//                case 'A':
-//                    // code for arrow up
-//                    cout<<"up arrow"<<endl;
-//                case 'B':
-//                    // code for arrow down
-//                    cout<<"down arrow"<<endl;
-//            }
-//        }
         fgets(command, 1024, stdin);
 
         int checkQuit = exec(command, 0);
@@ -164,7 +153,7 @@ int exec(char *command, int fix_bit) {
     while (token != NULL) {
         argv1[i] = token;
         if(strcmp(token, "|") && strcmp(token, "if")) {//do not include if or | in the commands
-            commands.at(pipe_counter - 1).emplace_back(token);
+            commands.at(pipe_counter - 1).push_back(token);
         }
         token = strtok(NULL, " ");
         i++;
@@ -192,7 +181,6 @@ int exec(char *command, int fix_bit) {
     }
     //for q 12
     if((!strcmp(argv1[0], "\033[B")) || (!strcmp(argv1[0], "\033[A"))){
-        cout<<"reached here"<<endl;
         for(int j=0; j < argc1; j++){
             if(!strcmp(argv1[j],"\033[A")){
                 if(his_count!=myList.size()-1){
@@ -230,6 +218,7 @@ int exec(char *command, int fix_bit) {
         myList.push_back(tempStr);
         cond_array[0][0] = 1;
         cond_array[1][0] = myList.size()-1;
+        return 0;
     }
 
     //enter the then input mod
@@ -271,6 +260,8 @@ int exec(char *command, int fix_bit) {
         int k = 0;
         int ind;
         cond_mod = 0;
+        ind = cond_array[1][0];// the index of the "if" command
+        cond_status = exec(myList.at(ind), 1);
         if(cond_status == 0){
             ind = cond_array[1][0] + 2;//the index of the if + 1(then) + 1(the first command)
             while(k < ind){
@@ -278,8 +269,7 @@ int exec(char *command, int fix_bit) {
                 k++;
             }
             for(int k = ind; k <= cond_array[1][1]; k++){
-//                cout<<(*it)<<endl;
-                exec(*it, 1);
+                status = exec(*it, 1);
                 it = next(it);
             }
         }
@@ -290,18 +280,18 @@ int exec(char *command, int fix_bit) {
                 k++;
             }
             for(int k = ind; k <= cond_array[1][2]; k++){
-//                cout<<(*it)<<endl;
-                exec(*it, 1);
+                status = exec(*it, 1);
                 it = next(it);
             }
         }
+        cond_mod = 0;
         cond_array[0][0] = -1;
         cond_array[0][1] = -1;
         cond_array[0][2] = -1;
         cond_array[1][2] = -1;
         cond_array[1][1] = -1;
         cond_array[1][0] = -1;
-//        wait(&status);
+        return status;
     }
 
     if(!strcmp(argv1[0], "if") && cond_mod == 1 && argc1 >= 2){
@@ -332,17 +322,16 @@ int exec(char *command, int fix_bit) {
     //question 6
     if (!strcmp(argv1[0], "!!")) {
         if (myList.empty()) {
-            printf(" 444%s\n", myList.back());
+//            printf(" 444%s\n", myList.back());
             return 0;
         }
-        printf("5555 %s\n", myList.back());
+//        printf("5555 %s\n", myList.back());
 
         exec(myList.back(), 1);
         return 0;
     }
     // for question 6
     if (myList.empty() || strcmp(myList.back(), tempStr)) {
-        printf("3333%s\n", tempStr);
         myList.push_back(tempStr);
     }
 
@@ -433,7 +422,8 @@ int exec(char *command, int fix_bit) {
         if (fork() == 0) {
             exec_pipeline(commands, 0, STDIN_FILENO);
         }
-        wait(NULL);
+        wait(&status);
+        return status;
     }
 
     /* for commands not part of the shell command language */
@@ -465,6 +455,7 @@ int exec(char *command, int fix_bit) {
         }
         execvp(argv1[0], argv1);
     }
+
 /* parent continues over here... */
 /* waits for child to exit if required */
     if (amper == 0)
