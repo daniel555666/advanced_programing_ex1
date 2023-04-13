@@ -317,6 +317,7 @@ int exec(char *command, int fix_bit) {
                 Variable *v = new Variable(key, value);
                 auto_ptr<Variable> var_ptr(v);
                 vars.emplace_back(var_ptr);
+                return 0;
             }
     }
 
@@ -369,8 +370,10 @@ int exec(char *command, int fix_bit) {
                     if (vars[k].get()->getKey().compare(key) == 0) {
                         cout << vars[k].get()->getValue() << endl;
                         flag = 1;
+                        return 0;
                     }
                 }
+                return 0;
             }
         }
         if (flag == 0) {
@@ -392,12 +395,15 @@ int exec(char *command, int fix_bit) {
     }
 
     if (argc1 == 2 && (!strcmp(argv1[0], "read"))){
+        int flag = 0;
         int index = 0;
         for(index = 0; index<vars.size(); index++){
             if(vars.at(index).get()->getKey() == string(argv1[1])){
                 cout<<vars.at(index).get()->getValue()<<endl;
+                flag = 1;
             }
         }
+        return 0;
     }
 
     redirect = 0;
