@@ -414,16 +414,19 @@ int exec(char *command, int fix_bit) {
         redirect = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
+        return 0;
     } else
         // for question 1
     if (argc1 > 1 && !strcmp(argv1[argc1 - 2], "2>")) {
         redirect2 = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
+        return 0;
     } else if (argc1 > 1 && !strcmp(argv1[argc1 - 2], ">>")) {
         redirect3 = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
+        return 0;
     }
     if (piping == 1) {
         if (fork() == 0) {
