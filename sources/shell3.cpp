@@ -202,7 +202,7 @@ int exec(char *command, int fix_bit) {
                 }
             }
 
-            else{ printf(" bad syntax\n");
+            else{ printf(" no command\n");
                 return 0;
             }
 
@@ -465,7 +465,9 @@ int exec(char *command, int fix_bit) {
             close(fd);
             /* append redirected */
         }
-        execvp(argv1[0], argv1);
+        if(-1 == execvp(argv1[0], argv1)){
+            exit(1);
+        };
     }
 
 /* parent continues over here... */
