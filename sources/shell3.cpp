@@ -27,9 +27,10 @@
 using namespace std;
 using std::vector;
 using std::string;
-char *prompt = "hello: ";
+char *prompt="hello: ";
 int his_count=0;
 int browse_mod = 0;
+bool flag_for_free=false;
 
 
 int exec(char *command, int fix_bit);
@@ -108,7 +109,6 @@ void sigint_handler(int sig) {
     if(flag){
         kill(pId,SIGTERM);
     }
-//    printf("%s",prompt);
     fflush(stdout);
 }
 
@@ -346,7 +346,12 @@ int exec(char *command, int fix_bit) {
 
     // for question 2: prompt
     if (argc1 == 3 && (!strcmp(argv1[0], "prompt")) && (!strcmp(argv1[1], "="))) {
-        prompt = argv1[2];
+        if(flag_for_free){
+            free(prompt);
+        }
+        flag_for_free=true;
+        prompt = (char*)malloc(strlen(argv1[2])+1); // allocate memory for prompt
+        strcpy(prompt, argv1[2]); // copy string from argv[2] to prompt
         return 0;
     }
 
@@ -414,19 +419,16 @@ int exec(char *command, int fix_bit) {
         redirect = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
-        return 0;
     } else
         // for question 1
     if (argc1 > 1 && !strcmp(argv1[argc1 - 2], "2>")) {
         redirect2 = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
-        return 0;
     } else if (argc1 > 1 && !strcmp(argv1[argc1 - 2], ">>")) {
         redirect3 = 1;
         argv1[argc1 - 2] = NULL;
         outfile = argv1[argc1 - 1];
-        return 0;
     }
     if (piping == 1) {
         if (fork() == 0) {
